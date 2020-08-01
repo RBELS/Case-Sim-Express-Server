@@ -33,4 +33,29 @@ login.post('/', (req, res) => {
     }
 })
 
+login.get('/', (req, res) => {
+    const userToken = req.cookies.userToken;
+    if (userToken) {
+        const { username, password } = JSON.parse(CryptoJS.AES.decrypt(userToken, secretKey).toString(CryptoJS.enc.Utf8));
+        mongoClient.connect(async(err, client) => {
+            if (err)
+                return console.log(err);
+            const userFound = await client.db('casesim').collection('users').findOne({ username, password });
+            if (userFound) {
+                res.status(200).json({ success: true }).end();
+            } else {
+                res.status(200).json({ success: false }).end();
+            }
+        })
+    } else {
+        res.status(200).json({ success: false }).end();
+    }
+})
+
+login.delete('/', (req, res) => {
+    // res.cookie('userToken', userToken, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true })
+    res.clearCookie('userToken');
+    res.status(200).end();
+});
+
 module.exports = login;
