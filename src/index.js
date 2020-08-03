@@ -5,6 +5,7 @@ const auth = require('./auth/auth');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const profile = require('./profile/profile');
+const Case = require('./case/case');
 
 
 const app = express();
@@ -21,5 +22,6 @@ app.use(cookieParser());
 app.use('/cases/', casesList);
 app.use('/auth/', auth);
 app.use('/profile/', profile);
+app.use('/open/', Case);
 
 app.listen(PORT);
