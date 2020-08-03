@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const profile = require('./profile/profile');
 const Case = require('./case/case');
+const validators = require('./validators/validators');
 
 
 const app = express();
@@ -23,5 +24,6 @@ app.use('/cases/', casesList);
 app.use('/auth/', auth);
 app.use('/profile/', profile);
 app.use('/open/', Case);
+app.use('/validators/', validators);
 
 app.listen(PORT);

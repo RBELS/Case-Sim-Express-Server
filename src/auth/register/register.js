@@ -6,8 +6,8 @@ const { secretKey } = require('../secret');
 const register = express();
 const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
 
-register.get('/', (req, res) => {
-    const { username, password } = req.query;
+register.post('/', (req, res) => {
+    const { username, password } = req.body;
     const incorrectInput = !username || !password || username.length < 3 || username.length > 20 || password.length < 8 || password.length > 20;
     if (incorrectInput) {
         res.status(400).json({ success: false }).end();
