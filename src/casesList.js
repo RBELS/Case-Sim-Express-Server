@@ -24,7 +24,7 @@ casesList.get('/:id?', (req, res) => {
 
             res.status(200).json({
                 ...caseObj,
-                items: caseObj.items.map((item => ({...item, avatar: `${baseImgUrl}/img/${caseObj.name}/${item.id}.png` })))
+                items: caseObj.items.map((item => ({...item, avatar: `${baseImgUrl}/img/${caseObj.name}/${item.id}.${caseObj.ext}` })))
             });
         }
     });
