@@ -20,6 +20,8 @@ Case.get('/:caseid', (req, res) => {
 
         const randomItem = openCase(items);
 
+        randomItem.avatar = `${baseImgUrl}/img/${thisCase.name}/${randomItem.id}.${thisCase.ext}`;
+
         res.json(randomItem);
     });
 
