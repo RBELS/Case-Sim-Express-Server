@@ -1,7 +1,6 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const { baseImgUrl } = require('../instances');
-const MAX_CHANCE_NUMBER = 100;
 
 const Case = express();
 const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
@@ -17,9 +16,7 @@ Case.get('/:caseid', (req, res) => {
             return;
         }
         const items = thisCase.items;
-
         const randomItem = openCase(items);
-
         randomItem.avatar = `${baseImgUrl}/img/${thisCase.name}/${randomItem.id}.${thisCase.ext}`;
 
         res.json(randomItem);
@@ -27,9 +24,7 @@ Case.get('/:caseid', (req, res) => {
 
 });
 
-
 const openCase = (items) => {
-    // let random = Math.random() * maxChance;
     let random = Math.random() * calculateMaxChance(items);
 
     for (let i = 0; i < items.length; i++) {
@@ -47,6 +42,5 @@ const calculateMaxChance = items => {
     }
     return max;
 }
-
 
 module.exports = Case;
