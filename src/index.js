@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const profile = require('./profile/profile');
 const Case = require('./case/case');
 const validators = require('./validators/validators');
+const public = require('./public/public');
 
 
 const app = express();
@@ -15,6 +16,7 @@ const PROD = false;
 
 app.use(cors({
     origin: 'http://25.40.173.182:3000',
+    // origin: 'http://192.168.0.106:3000',
     credentials: true
 }));
 app.use(bodyParser.json());
@@ -25,5 +27,6 @@ app.use('/auth/', auth);
 app.use('/profile/', profile);
 app.use('/open/', Case);
 app.use('/validators/', validators);
+app.use('/public/', public);
 
 app.listen(PORT);
