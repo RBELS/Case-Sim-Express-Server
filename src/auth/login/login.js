@@ -18,7 +18,7 @@ login.post('/', (req, res) => {
 
             const currentUser = await client.db('casesim').collection('users').findOne({ username });
             if (currentUser && password === CryptoJS.AES.decrypt(currentUser.password, secretKey).toString(CryptoJS.enc.Utf8)) {
-                const userToken = CryptoJS.AES.encrypt(JSON.stringify(currentUser), secretKey).toString();
+                const userToken = CryptoJS.AES.encrypt(JSON.stringify({ username: currentUser.username, password: currentUser.password }), secretKey).toString();
                 res.cookie('userToken', userToken, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true })
                 res.status(200).json({
                     success: true

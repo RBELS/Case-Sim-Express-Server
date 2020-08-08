@@ -20,9 +20,9 @@ register.post('/', (req, res) => {
                 res.status(200).json({ success: false }).end();
             } else {
                 const passwordToken = CryptoJS.AES.encrypt(password, secretKey).toString();
-                const { ops: [newUser] } = await client.db('casesim').collection('users').insertOne({ username, password: passwordToken });
+                const { ops: [newUser] } = await client.db('casesim').collection('users').insertOne({ username, password: passwordToken, balance: 300 });
 
-                const userToken = CryptoJS.AES.encrypt(JSON.stringify(newUser), secretKey).toString();
+                const userToken = CryptoJS.AES.encrypt(JSON.stringify({ username: newUser.username, password: newUser.password }), secretKey).toString();
                 res.cookie('userToken', userToken, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
                 res.status(200).json({ success: true }).end();
             }
