@@ -10,7 +10,7 @@ casesList.get('/:id?', (req, res) => {
         if (err) return console.log(err);
 
         if (!req.params.id) {
-            const casesQuery = await client.db('casesim').collection('cases').find({}).toArray();
+            const casesQuery = await client.db('casesim').collection('cases').find({ show: true }).toArray();
             const cases = casesQuery.map(({ _id, id, name, avatar, price }) => ({ _id, id, name, avatar, price }));
             res.status(200).json(cases);
         } else {
