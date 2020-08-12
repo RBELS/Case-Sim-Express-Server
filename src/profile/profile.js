@@ -24,7 +24,7 @@ profile.get('/info/:username', (req, res) => {
 
         const userIn = await client.db('casesim').collection('users').findOne({ username: usernameParam });
         if (!userIn) {
-            res.status(404).json({ success: false }).end();
+            res.status(200).json({ success: false }).end();
             return;
         }
 
@@ -44,7 +44,7 @@ profile.get('/drops/:username/:page', (req, res) => {
         if (err) {
             return console.log(err);
         }
-        const NUM = 5;
+        const NUM = 20;
         const usernameParam = req.params.username;
         const page = req.params.page;
 
@@ -52,11 +52,7 @@ profile.get('/drops/:username/:page', (req, res) => {
 
         const paginatedDrops = drops.slice(NUM * (page - 1), NUM * page);
 
-        res.json({
-            username: usernameParam,
-            page,
-            drops: paginatedDrops
-        });
+        res.json(paginatedDrops);
     });
 })
 

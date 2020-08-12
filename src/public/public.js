@@ -27,16 +27,19 @@ public.get('/header/:rowid?', (req, res) => {
         }
 
         const headerDrops = drops.map(drop => ({
-            _id: drop._id,
-            id: drop.id,
-            name: drop.name,
-            price: drop.price,
-            quality: drop.quality,
-            avatar: drop.avatar,
-            user: drop.user,
-            caseid: drop.caseid,
-            caseavatar: drop.caseavatar,
-            rowid: drop.rowid
+            ...drop,
+            _id: undefined,
+            chance: undefined,
+            sold: undefined
+                // id: drop.id,
+                // name: drop.name,
+                // price: drop.price,
+                // quality: drop.quality,
+                // avatar: drop.avatar,
+                // user: drop.user,
+                // caseid: drop.caseid,
+                // caseavatar: drop.caseavatar,
+                // rowid: drop.rowid
         }));
 
         res.status(200).json(headerDrops).end();

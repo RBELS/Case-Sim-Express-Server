@@ -16,8 +16,8 @@ casesList.get('/:id?', (req, res) => {
         } else {
             const caseid = parseInt(req.params.id);
             const caseObj = await client.db('casesim').collection('cases').findOne({ id: caseid });
-            if (!caseObj) res.status(404).json({
-                error: "Error 404: Not Found."
+            if (!caseObj) res.status(200).json({
+                error: "Not Found."
             }).end();
 
 
