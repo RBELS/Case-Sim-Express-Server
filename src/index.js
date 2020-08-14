@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { MongoClient } = require('mongodb');
 const casesList = require('./casesList');
 const auth = require('./auth/auth');
 const bodyParser = require('body-parser');
@@ -32,4 +33,16 @@ app.use('/validators/', validators);
 app.use('/public/', public);
 app.use('/items/', items);
 
-app.listen(PORT);
+const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoClient.connect(async(err, client) => {
+    if (err) {
+        return console.log(err.stack);
+    }
+    app.locals.users = client.db('casesim').collection('users');
+    app.locals.cases = client.db('casesim').collection('cases');
+    app.locals.drops = client.db('casesim').collection('drops');
+
+    app.listen(PORT, () => {
+        console.log(`App started on http://localhost:${PORT}`);
+    })
+});

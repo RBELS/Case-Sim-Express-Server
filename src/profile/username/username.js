@@ -1,9 +1,9 @@
-const express = require('express');
+const { Router } = require('express');
 const CryptoJS = require('crypto-js');
 const { secretKey } = require('../../auth/secret');
 
 
-const username = express();
+const username = new Router();
 
 username.get('/', (req, res) => {
     const userToken = req.cookies.userToken;

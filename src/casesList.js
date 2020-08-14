@@ -1,32 +1,28 @@
-const express = require('express');
-const { MongoClient } = require('mongodb');
+const { Router } = require('express');
 const { baseImgUrl } = require('./instances');
 
-const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
-const casesList = express();
+const casesList = new Router();
 
-casesList.get('/:id?', (req, res) => {
-    mongoClient.connect(async(err, client) => {
-        if (err) return console.log(err);
+casesList.get('/:id?', async(req, res) => {
+    const { cases } = req.app.locals;
 
-        if (!req.params.id) {
-            const casesQuery = await client.db('casesim').collection('cases').find({ show: true }).toArray();
-            const cases = casesQuery.map(({ _id, id, name, avatar, price }) => ({ _id, id, name, avatar, price }));
-            res.status(200).json(cases);
-        } else {
-            const caseid = parseInt(req.params.id);
-            const caseObj = await client.db('casesim').collection('cases').findOne({ id: caseid });
-            if (!caseObj) res.status(200).json({
-                error: "Not Found."
-            }).end();
+    if (!req.params.id) {
+        const casesArray = await cases.find({ show: true }).toArray();
+        const casesToSend = casesArray.map(({ _id, id, name, avatar, price }) => ({ _id, id, name, avatar, price }));
+        res.status(200).json(casesToSend);
+        return;
+    }
 
+    const caseid = parseInt(req.params.id);
+    const caseObj = await cases.findOne({ id: caseid });
+    if (!caseObj) {
+        res.status(200).json({ error: 'Not Found.' }).end();
+        return;
+    }
 
-
-            res.status(200).json({
-                ...caseObj,
-                items: caseObj.items.map((item => ({...item, avatar: `${baseImgUrl}/img/${caseObj.name}/${item.id}.${caseObj.ext}` })))
-            });
-        }
+    res.status(200).json({
+        ...caseObj,
+        items: caseObj.items.map((item => ({...item, avatar: `${baseImgUrl}/img/${caseObj.name}/${item.id}.${caseObj.ext}` })))
     });
 });
 

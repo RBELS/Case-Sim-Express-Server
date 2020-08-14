@@ -1,13 +1,10 @@
-const express = require('express');
+const { Router } = require('express');
 const username = require('./username/username');
-const { baseImgUrl } = require('../instances');
-const { MongoClient } = require('mongodb');
 const CryptoJS = require('crypto-js');
 const { secretKey } = require('../auth/secret');
 
-const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
 
-const profile = express();
+const profile = new Router();
 
 profile.use('/username/', username);
 
@@ -15,45 +12,39 @@ profile.get('/', (req, res) => {
     res.status(200).send('Index of Profile.').end();
 })
 
-profile.get('/info/:username', (req, res) => {
-    mongoClient.connect(async(err, client) => {
-        if (err) {
-            return console.log(err);
-        }
-        const usernameParam = req.params.username;
+profile.get('/info/:username', async(req, res) => {
+    const { users } = req.app.locals;
 
-        const userIn = await client.db('casesim').collection('users').findOne({ username: usernameParam });
-        if (!userIn) {
-            res.status(200).json({ success: false }).end();
-            return;
-        }
+    const usernameParam = req.params.username;
 
-        const myProfile = await isItMe(usernameParam, req.cookies.userToken, client.db('casesim').collection('users'));
+    const userIn = await users.findOne({ username: usernameParam });
+    if (!userIn) {
+        res.status(200).json({ success: false }).end();
+        return;
+    }
 
-        res.status(200).json({
-            success: true,
-            username: userIn.username,
-            balance: myProfile ? userIn.balance : undefined,
-            myProfile,
-        }).end();
-    });
+    const myProfile = await isItMe(usernameParam, req.cookies.userToken, users);
+
+    res.status(200).json({
+        success: true,
+        username: userIn.username,
+        balance: myProfile ? userIn.balance : undefined,
+        myProfile,
+    }).end();
 })
 
-profile.get('/drops/:username/:page', (req, res) => {
-    mongoClient.connect(async(err, client) => {
-        if (err) {
-            return console.log(err);
-        }
-        const NUM = 20;
-        const usernameParam = req.params.username;
-        const page = req.params.page;
+profile.get('/drops/:username/:page', async(req, res) => {
+    const { drops } = req.app.locals;
 
-        const drops = await client.db('casesim').collection('drops').find({ user: usernameParam }).sort({ rowid: -1 }).toArray();
+    const NUM = 20;
+    const usernameParam = req.params.username;
+    const page = req.params.page;
 
-        const paginatedDrops = drops.slice(NUM * (page - 1), NUM * page);
+    const dropsArray = await drops.find({ user: usernameParam }).sort({ rowid: -1 }).toArray();
 
-        res.json(paginatedDrops);
-    });
+    const paginatedDrops = dropsArray.slice(NUM * (page - 1), NUM * page);
+
+    res.json(paginatedDrops);
 })
 
 const isItMe = async(usernameParam, userToken, users) => {

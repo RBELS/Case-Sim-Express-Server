@@ -1,8 +1,8 @@
-const express = require('express');
+const { Router } = require('express');
 const login = require('./login/login');
 const register = require('./register/register');
 
-const auth = express();
+const auth = new Router();
 
 auth.use('/login/', login);
 auth.use('/register/', register);

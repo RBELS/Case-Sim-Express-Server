@@ -1,23 +1,19 @@
-const express = require('express');
-const { MongoClient } = require('mongodb');
+const { Router } = require('express');
 
-const usernameExists = express();
-const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
+const usernameExists = new Router();
 
-usernameExists.post('/', (req, res) => {
-    mongoClient.connect(async(err, client) => {
-        if (err)
-            return console.log(err);
-        const { username } = req.body;
+usernameExists.post('/', async(req, res) => {
+    const { users } = req.app.locals;
 
-        if (!username) {
-            res.status(400).json({ success: false, error: 'Wrong input.' }).end();
-            return;
-        }
+    const { username } = req.body;
 
-        const user = await client.db('casesim').collection('users').findOne({ username });
-        res.status(200).json({ success: true, exists: user ? true : false })
-    });
+    if (!username) {
+        res.status(400).json({ success: false, error: 'Wrong input.' }).end();
+        return;
+    }
+
+    const user = await users.findOne({ username });
+    res.status(200).json({ success: true, exists: user ? true : false });
 });
 
 module.exports = usernameExists;
