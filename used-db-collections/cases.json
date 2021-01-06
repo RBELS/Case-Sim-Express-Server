@@ -1,0 +1,371 @@
+[{
+  "_id": {
+    "$oid": "5f1b168b9654051de49d4444"
+  },
+  "id": 0,
+  "name": "Cobblestone",
+  "avatar": "http://25.40.173.182:4000/img/Cobblestone/index.webp",
+  "price": 40,
+  "ext": "png",
+  "show": true,
+  "items": [
+    {
+      "id": 0,
+      "name": "Dual Berettas | Терн",
+      "price": 1.24,
+      "quality": 0,
+      "chance": 8.5
+    },
+    {
+      "id": 1,
+      "name": "MAC-10 | Индиго",
+      "price": 2.73,
+      "quality": 0,
+      "chance": 8.5
+    },
+    {
+      "id": 2,
+      "name": "P90 | Гроза",
+      "price": 2.3,
+      "quality": 0,
+      "chance": 8.5
+    },
+    {
+      "id": 3,
+      "name": "SCAR-20 | Гроза",
+      "price": 3.5,
+      "quality": 0,
+      "chance": 8.5
+    },
+    {
+      "id": 4,
+      "name": "UMP-45 | Индиго",
+      "price": 2.55,
+      "quality": 0,
+      "chance": 8.5
+    },
+    {
+      "id": 5,
+      "name": "MAG-7 | Серебро",
+      "price": 3.84,
+      "quality": 1,
+      "chance": 8
+    },
+    {
+      "id": 6,
+      "name": "NOVA | Зеленое яблоко",
+      "price": 3.98,
+      "quality": 1,
+      "chance": 8
+    },
+    {
+      "id": 7,
+      "name": "SAWED-OFF | Пыльник",
+      "price": 4.5,
+      "quality": 1,
+      "chance": 8
+    },
+    {
+      "id": 8,
+      "name": "USP-S | Королевский синий",
+      "price": 29.93,
+      "quality": 1,
+      "chance": 8
+    },
+    {
+      "id": 9,
+      "name": "MP9 | Темный век",
+      "price": 35.38,
+      "quality": 2,
+      "chance": 6
+    },
+    {
+      "id": 10,
+      "name": "P2000 | Кольчуга",
+      "price": 37.21,
+      "quality": 2,
+      "chance": 6
+    },
+    {
+      "id": 11,
+      "name": "CZ-75 AUTO | Чаша",
+      "price": 164.11,
+      "quality": 3,
+      "chance": 5
+    },
+    {
+      "id": 12,
+      "name": "Desert Eagle | Пищаль",
+      "price": 180.25,
+      "quality": 3,
+      "chance": 5
+    },
+    {
+      "id": 13,
+      "name": "M4A1-S | Рыцарь",
+      "price": 229.69,
+      "quality": 4,
+      "chance": 3
+    },
+    {
+      "id": 14,
+      "name": "AWP | История о дрконе",
+      "price": 1225.56,
+      "quality": 5,
+      "chance": 0.5
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f1b168b9654051de49d4445"
+  },
+  "id": 1,
+  "name": "Asiimov",
+  "avatar": "http://25.40.173.182:4000/img/Asiimov/index.webp",
+  "price": 20,
+  "ext": "png",
+  "show": true,
+  "items": [
+    {
+      "id": 0,
+      "name": "CZ75-AUTO | Тактикотик",
+      "price": 1.38,
+      "quality": 3,
+      "chance": 18
+    },
+    {
+      "id": 1,
+      "name": "DESERT EAGLE | Пламя",
+      "price": 433.69,
+      "quality": 3,
+      "chance": 1
+    },
+    {
+      "id": 2,
+      "name": "M4A1-S | Василиск",
+      "price": 3.61,
+      "quality": 3,
+      "chance": 18
+    },
+    {
+      "id": 3,
+      "name": "P2000 | Обсидиан",
+      "price": 3.15,
+      "quality": 3,
+      "chance": 18
+    },
+    {
+      "id": 4,
+      "name": "TEC-9 | Ядерная угроза",
+      "price": 293.05,
+      "quality": 3,
+      "chance": 2
+    },
+    {
+      "id": 5,
+      "name": "AWP | Красная линия",
+      "price": 32.83,
+      "quality": 4,
+      "chance": 8
+    },
+    {
+      "id": 6,
+      "name": "DESERT EAGLE | Ржавый кобальт",
+      "price": 34.5,
+      "quality": 4,
+      "chance": 7.5
+    },
+    {
+      "id": 7,
+      "name": "P250 | Asiimov",
+      "price": 25.88,
+      "quality": 4,
+      "chance": 8
+    },
+    {
+      "id": 8,
+      "name": "UMP-45 | Динамика",
+      "price": 8.2,
+      "quality": 4,
+      "chance": 8
+    },
+    {
+      "id": 9,
+      "name": "AK-47 | Азимов",
+      "price": 173,
+      "quality": 5,
+      "chance": 2.5
+    },
+    {
+      "id": 10,
+      "name": "AWP | Азимов",
+      "price": 77.48,
+      "quality": 5,
+      "chance": 2.5
+    },
+    {
+      "id": 11,
+      "name": "M4A4 | Азимов",
+      "price": 116.72,
+      "quality": 5,
+      "chance": 2.5
+    },
+    {
+      "id": 12,
+      "name": "P90 | Азимов",
+      "price": 47.18,
+      "quality": 5,
+      "chance": 2.5
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f1b168b9654051de49d4446"
+  },
+  "id": 2,
+  "name": "HyperBeast",
+  "avatar": "http://25.40.173.182:4000/img/Hyperbeast/index.webp",
+  "price": 15,
+  "ext": "png",
+  "show": true,
+  "items": [
+    {
+      "id": 0,
+      "name": "AK-47 | Orbit Mk01",
+      "price": 15.9,
+      "quality": 3,
+      "chance": 11
+    },
+    {
+      "id": 1,
+      "name": "P90 | Chopper",
+      "price": 1.8,
+      "quality": 3,
+      "chance": 11
+    },
+    {
+      "id": 2,
+      "name": "UMP-45 | Гран-при",
+      "price": 0.37,
+      "quality": 3,
+      "chance": 11
+    },
+    {
+      "id": 3,
+      "name": "M4A1-S | Страж",
+      "price": 11.86,
+      "quality": 4,
+      "chance": 11
+    },
+    {
+      "id": 4,
+      "name": "M4A1-S | Хот-род",
+      "price": 159.25,
+      "quality": 4,
+      "chance": 3
+    },
+    {
+      "id": 5,
+      "name": "NOVA | Скоростной зверь",
+      "price": 13.31,
+      "quality": 4,
+      "chance": 11
+    },
+    {
+      "id": 6,
+      "name": "P250 | Покойник",
+      "price": 5.92,
+      "quality": 4,
+      "chance": 11
+    },
+    {
+      "id": 7,
+      "name": "UMP-45 | Primal Saber",
+      "price": 7.96,
+      "quality": 4,
+      "chance": 11
+    },
+    {
+      "id": 8,
+      "name": "AWP | Скоростной зверь",
+      "price": 76.73,
+      "quality": 5,
+      "chance": 6.5
+    },
+    {
+      "id": 9,
+      "name": "FIVE-SEVEN | Hyper Beast",
+      "price": 98.52,
+      "quality": 5,
+      "chance": 6.5
+    },
+    {
+      "id": 10,
+      "name": "M4A1-S | Скоростной зверь",
+      "price": 79.06,
+      "quality": 5,
+      "chance": 6.5
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f2868b95c87c61220429d08"
+  },
+  "id": 3,
+  "name": "Gay",
+  "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/LGBT_flag_square.svg/1024px-LGBT_flag_square.svg.png",
+  "price": 666,
+  "ext": "jpg",
+  "show": false,
+  "items": [
+    {
+      "id": 0,
+      "name": "Fedor",
+      "price": 666,
+      "quality": 2,
+      "chance": 1
+    },
+    {
+      "id": 1,
+      "name": "Dima",
+      "price": 666,
+      "quality": 2,
+      "chance": 1
+    },
+    {
+      "id": 2,
+      "name": "Kirill",
+      "price": 666,
+      "quality": 2,
+      "chance": 2
+    },
+    {
+      "id": 3,
+      "name": "Sasha Afanasenko",
+      "price": 666,
+      "quality": 2,
+      "chance": 1
+    },
+    {
+      "id": 4,
+      "name": "Danila",
+      "price": 666,
+      "quality": 2,
+      "chance": 1
+    },
+    {
+      "id": 5,
+      "name": "Podolinsky",
+      "price": 666,
+      "quality": 2,
+      "chance": 1
+    },
+    {
+      "id": 6,
+      "name": "Artyom",
+      "price": 666,
+      "quality": 2,
+      "chance": 1
+    }
+  ]
+}]

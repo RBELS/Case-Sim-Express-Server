@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "5f242de1a87ab62030ade695"
+  },
+  "username": "rebel",
+  "password": "U2FsdGVkX18WF849fsW2UfzwTin09x/lzgMs6x1BWUs=",
+  "balance": 1568.8999999999985
+},{
+  "_id": {
+    "$oid": "5f28165adbe54b19344479ae"
+  },
+  "username": "perfomo",
+  "password": "U2FsdGVkX19xe5/Ht1P3E2CxOUbxztKPXhsb3O7wMIA=",
+  "balance": 3263.3199999999997
+},{
+  "_id": {
+    "$oid": "5f2dab666e5ed03f74e3b0ee"
+  },
+  "username": "Pardox7525",
+  "password": "U2FsdGVkX19AdMsEcfNTRz5RCsR2AiOPZMnxphdwcjg=",
+  "balance": 300
+},{
+  "_id": {
+    "$oid": "5f32eafae3fd762768e2a67e"
+  },
+  "username": "dima",
+  "password": "U2FsdGVkX1+hV8GcRzGzg86V7bI+UuQ6GFl9MqyHrCw=",
+  "balance": 120.01000000000002
+},{
+  "_id": {
+    "$oid": "5f34147f160d8d2e786acc21"
+  },
+  "username": "rebeltest",
+  "password": "U2FsdGVkX1+Nf6VGRAwTyQCGZhd2sGLc1wLIYv5CUV0=",
+  "balance": 300
+},{
+  "_id": {
+    "$oid": "5f344f1064d3880ccc35a74f"
+  },
+  "username": "rebeltest1",
+  "password": "U2FsdGVkX18UZLRK/7QeOR8KMijoPscq60lcHe1jPMw=",
+  "balance": 300
+},{
+  "_id": {
+    "$oid": "5f365e48c59a661a50d93c64"
+  },
+  "username": "test",
+  "password": "U2FsdGVkX1+dNFhGlqU9k1i5eaNPmjQsoT7XMEWHBPE=",
+  "balance": 300
+}]
