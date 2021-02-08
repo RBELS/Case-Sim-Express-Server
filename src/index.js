@@ -17,8 +17,8 @@ const PORT = 5000;
 const PROD = false;
 
 app.use(cors({
-    origin: 'http://25.40.173.182:3000',
-    // origin: 'http://192.168.0.106:3000',
+    // origin: 'http://25.40.173.182:3000',
+    origin: 'http://192.168.1.34:3000',
     // origin: 'http://localhost:3000',
     credentials: true
 }));
