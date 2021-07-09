@@ -2,11 +2,13 @@ const { Router } = require('express');
 const username = require('./username/username');
 const CryptoJS = require('crypto-js');
 const { secretKey } = require('../auth/secret');
+const balance = require('./balance/balance');
 
 
 const profile = new Router();
 
 profile.use('/username/', username);
+profile.use('/balance/', balance);
 
 profile.get('/', (req, res) => {
     res.status(200).send('Index of Profile.').end();
