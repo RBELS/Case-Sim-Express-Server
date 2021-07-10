@@ -1,7 +1,10 @@
 const { Router } = require('express');
+const img = require('./img/img');
 
 const MAX_NUMBER = 20;
 const public = new Router();
+
+public.use('/img/', img);
 
 public.get('/', (req, res) => {
     res.send('/public/');

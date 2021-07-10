@@ -35,7 +35,7 @@ function mapAvatar(avatar) {
         return avatar;
     }
 
-    return baseImgUrl + avatar;
+    return `${baseImgUrl}${avatar}`;
 }
 
 
