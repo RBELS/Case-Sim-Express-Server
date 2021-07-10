@@ -49,7 +49,8 @@ Case.get('/:caseid', async(req, res) => {
     randomItem.rowid = rowid;
     randomItem.sold = false;
     users.findOneAndUpdate({ username: foundUser.username, password: foundUser.password }, { '$inc': { balance: -1 * thisCase.price } });
-    drops.insertOne({...randomItem, user: username, sold: false, caseid: thisCase.id, caseavatar: thisCase.avatar, rowid });
+    const insertCaseAvatar = thisCase.avatar[0] === '/' ? baseImgUrl + thisCase.avatar : thisCase.avatar;
+    drops.insertOne({...randomItem, user: username, sold: false, caseid: thisCase.id, caseavatar: insertCaseAvatar, rowid });
 
 
     res.json({ success: true, item: randomItem });
