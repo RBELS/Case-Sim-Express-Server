@@ -35,6 +35,8 @@ profile.get('/info/:username', async(req, res) => {
     }).end();
 })
 
+// URL EXAMPLE
+// http://192.168.1.34:5000/profile/drops/rebel/1?caseId=1&rarity=3&notSold=false
 profile.get('/drops/:username/:page', async(req, res) => {
     const { drops } = req.app.locals;
 
@@ -42,9 +44,18 @@ profile.get('/drops/:username/:page', async(req, res) => {
     const usernameParam = req.params.username;
     const page = req.params.page;
 
-    const dropsArray = await drops.find({ user: usernameParam }).sort({ rowid: -1 }).toArray();
+    //urldata for sorting
+    const caseId = parseInt(req.query.caseId);
+    const rarity = parseInt(req.query.rarity);
+    const notSold = parseBoolean(req.query.notSold);
 
-    const paginatedDrops = dropsArray.slice(NUM * (page - 1), NUM * page);
+    console.log(caseId);
+
+    const dropsArray = await drops.find({
+        user: usernameParam
+    }).sort({ rowid: -1 }).toArray();
+
+    const paginatedDrops = filterDropsArray(dropsArray, caseId, rarity, notSold).slice(NUM * (page - 1), NUM * page);
 
     res.json(paginatedDrops);
 })
@@ -61,6 +72,41 @@ const isItMe = async(usernameParam, userToken, users) => {
         }
     }
     return result;
+}
+
+const parseBoolean = str => {
+    if(str === 'false') {
+        return false;
+    } else if(str === 'true') {
+        return true;
+    } else {
+        return undefined;
+    }
+}
+
+const filterDropsArray = (array, caseId, rarity, notSold) => {
+    const newArray = array.filter(item => {
+        debugger
+        if((item.caseid === caseId || (isNaN(caseId) || caseId === undefined))) {
+
+        } else {
+            return false;
+        }
+        if(item.quality === rarity || (isNaN(caseId) || caseId === undefined)) {
+
+        } else {
+            return false;
+        }
+
+
+        if(notSold && item.sold) {
+            return false;
+        }
+
+
+        return true;
+    })
+    return newArray;
 }
 
 module.exports = profile;
