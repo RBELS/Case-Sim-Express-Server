@@ -40,7 +40,7 @@ profile.get('/info/:username', async(req, res) => {
 profile.get('/drops/:username/:page', async(req, res) => {
     const { drops } = req.app.locals;
 
-    const NUM = 20;
+    const NUM = 20;//Number of drops on every page
     const usernameParam = req.params.username;
     const page = req.params.page;
 
@@ -49,7 +49,6 @@ profile.get('/drops/:username/:page', async(req, res) => {
     const rarity = parseInt(req.query.rarity);
     const notSold = parseBoolean(req.query.notSold);
 
-    console.log(caseId);
 
     const dropsArray = await drops.find({
         user: usernameParam
@@ -86,13 +85,13 @@ const parseBoolean = str => {
 
 const filterDropsArray = (array, caseId, rarity, notSold) => {
     const newArray = array.filter(item => {
-        debugger
+        // debugger
         if((item.caseid === caseId || (isNaN(caseId) || caseId === undefined))) {
 
         } else {
             return false;
         }
-        if(item.quality === rarity || (isNaN(caseId) || caseId === undefined)) {
+        if(item.quality === rarity || (isNaN(rarity) || rarity === undefined)) {
 
         } else {
             return false;
