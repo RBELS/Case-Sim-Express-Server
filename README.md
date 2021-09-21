@@ -8,7 +8,7 @@ Runs a web server for [Case Simulator App](https://github.com/RBELS/case-simulat
 
 ## `Additional server`
 
-This application is also using an additional server to provide the app with all the images used in it.(This server example with it's description will be added soon)
+Additional image server was merged into this one. 
 
 ## `Database structure`
 
