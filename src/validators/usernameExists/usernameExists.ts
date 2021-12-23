@@ -1,8 +1,12 @@
-const { Router } = require('express');
+import { Request, Router } from 'express'
 
-const usernameExists = new Router();
+const usernameExists = Router();
 
-usernameExists.post('/', async(req, res) => {
+type UsernameExistsRequestType = {
+    username: string
+}
+
+usernameExists.post('/', async(req: Request<any, any, UsernameExistsRequestType>, res) => {
     const { users } = req.app.locals;
 
     const { username } = req.body;
@@ -16,4 +20,4 @@ usernameExists.post('/', async(req, res) => {
     res.status(200).json({ success: true, exists: user ? true : false });
 });
 
-module.exports = usernameExists;
+export default usernameExists

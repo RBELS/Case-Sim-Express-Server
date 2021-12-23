@@ -1,9 +1,10 @@
-const { Router } = require('express');
-const { baseImgUrl } = require('../instances');
-const CryptoJS = require('crypto-js');
-const { secretKey } = require('../auth/secret');
+import { CaseItemType, SendItemType } from './../types/casesTypes';
+import { Router } from "express";
+import { baseImgUrl } from "../instances";
+import CryptoJS from "crypto-js";
+import { secretKey } from "../auth/secret";
 
-const Case = new Router();
+const Case = Router();
 
 Case.get('/:caseid', async(req, res) => {
     const { users, cases, drops } = req.app.locals;
@@ -27,7 +28,7 @@ Case.get('/:caseid', async(req, res) => {
     const foundUser = await users.findOne({ username, password });
     const last = await drops.find().sort({ _id: -1 }).toArray();
 
-    let rowid;
+    let rowid: number;
     if (!last[0]) {
         rowid = 0;
     } else {
@@ -45,18 +46,26 @@ Case.get('/:caseid', async(req, res) => {
 
     const items = thisCase.items;
     randomItem = openCase(items);
-    randomItem.avatar = `${baseImgUrl}/img/${thisCase.name}/${randomItem.id}.${thisCase.ext}`;
-    randomItem.rowid = rowid;
-    randomItem.sold = false;
+    if (!randomItem) {
+        res.status(404);
+        return;
+    }
+
+    let sendItem: SendItemType = {
+        ...randomItem,
+        avatar: `${baseImgUrl}/img/${thisCase.name}/${randomItem.id}.${thisCase.ext}`,
+        rowid,
+        sold: false
+    }
     users.findOneAndUpdate({ username: foundUser.username, password: foundUser.password }, { '$inc': { balance: -1 * thisCase.price } });
     const insertCaseAvatar = thisCase.avatar[0] === '/' ? baseImgUrl + thisCase.avatar : thisCase.avatar;
-    drops.insertOne({...randomItem, user: username, sold: false, caseid: thisCase.id, caseavatar: insertCaseAvatar, rowid });
+    drops.insertOne({...sendItem, user: username, sold: false, caseid: thisCase.id, caseavatar: insertCaseAvatar, rowid });
 
 
-    res.json({ success: true, item: randomItem });
+    res.json({ success: true, item: sendItem });
 });
 
-const openCase = (items) => {
+const openCase = (items: CaseItemType[]): CaseItemType | undefined => {
     let random = Math.random() * calculateMaxChance(items);
 
     for (let i = 0; i < items.length; i++) {
@@ -65,9 +74,10 @@ const openCase = (items) => {
         }
         random -= items[i].chance;
     }
+
 }
 
-const calculateMaxChance = items => {
+const calculateMaxChance = (items: CaseItemType[]) => {
     let max = 0;
     for (let i = 0; i < items.length; i++) {
         max += items[i].chance;
@@ -75,4 +85,4 @@ const calculateMaxChance = items => {
     return max;
 }
 
-module.exports = Case;
+export default Case

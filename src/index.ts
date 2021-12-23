@@ -1,21 +1,22 @@
-const express = require('express');
-const cors = require('cors');
-const { MongoClient } = require('mongodb');
-const casesList = require('./casesList');
-const auth = require('./auth/auth');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const profile = require('./profile/profile');
-const Case = require('./case/case');
-const validators = require('./validators/validators');
-const public = require('./public/public');
-const items = require('./items/items');
+import express from 'express'
+import cors from 'cors'
+import { Collection, Document, MongoClient } from 'mongodb'
+import casesList from './casesList'
+import auth from './auth/auth'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import profile from './profile/profile'
+import Case from './case/case'
+import validators from './validators/validators'
+import Public from './public/public'
+import items from './items/items'
+
 
 const PORT = 5001;
 const PROD = false;
 const DB_NAME = 'casesim';
 
-const app = express();
+export const app = express();
 
 app.use(cors({
     // origin: 'http://25.40.173.182:3000',
@@ -32,14 +33,17 @@ app.use('/auth/', auth);
 app.use('/profile/', profile);
 app.use('/open/', Case);
 app.use('/validators/', validators);
-app.use('/public/', public);
+app.use('/public/', Public);
 app.use('/items/', items);
 
-const mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoClient = new MongoClient("mongodb://localhost:27017/");
 mongoClient.connect(async(err, client) => {
     if (err) {
         return console.log(err.stack);
+    } else if (!client) {
+        return console.log('Client is undefined in index.ts')
     }
+
     app.locals.users = client.db(DB_NAME).collection('users');
     app.locals.cases = client.db(DB_NAME).collection('cases');
     app.locals.drops = client.db(DB_NAME).collection('drops');
@@ -48,3 +52,4 @@ mongoClient.connect(async(err, client) => {
         console.log(`App started on http://localhost:${PORT}`);
     })
 });
+

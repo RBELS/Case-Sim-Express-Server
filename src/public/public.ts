@@ -1,20 +1,21 @@
-const { Router } = require('express');
-const img = require('./img/img');
+import { DropType } from './../types/dropsTypes';
+import { Router } from "express"
+import img from "./img/img"
 
 const MAX_NUMBER = 20;
-const public = new Router();
+const Public = Router();
 
-public.use('/img/', img);
+Public.use('/img/', img);
 
-public.get('/', (req, res) => {
+Public.get('/', (req, res) => {
     res.send('/public/');
 })
 
-public.get('/header/:rowid?', async(req, res) => {
+Public.get('/header/:rowid?', async(req, res) => {
     const { drops } = req.app.locals;
 
     const rowid = req.params.rowid;
-    let dropsArray;
+    let dropsArray: DropType[];
 
     if (rowid) {
         dropsArray = await drops.find(rowid ? { rowid: { $gt: parseInt(rowid) } } : {}).sort({ _id: -1 }).toArray();
@@ -32,4 +33,4 @@ public.get('/header/:rowid?', async(req, res) => {
     res.status(200).json(headerDrops).end();
 })
 
-module.exports = public;
+export default Public

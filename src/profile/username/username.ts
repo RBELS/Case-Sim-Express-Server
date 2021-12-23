@@ -1,12 +1,12 @@
-const { Router } = require('express');
-const CryptoJS = require('crypto-js');
-const { secretKey } = require('../../auth/secret');
+import { Router } from "express";
+import CryptoJS from "crypto-js";
+import { secretKey } from "../../auth/secret";
 
 
-const username = new Router();
+const username = Router();
 
 username.get('/', (req, res) => {
-    const userToken = req.cookies.userToken;
+    const userToken: string | undefined = req.cookies.userToken;
     if (!userToken) {
         res.json({ success: false, error: 'You are not logged.' }).end();
     } else {
@@ -14,5 +14,4 @@ username.get('/', (req, res) => {
         res.json({ success: true, username }).end();
     }
 });
-
-module.exports = username;
+export default username

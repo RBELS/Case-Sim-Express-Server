@@ -1,8 +1,10 @@
-const { Router } = require('express');
-const CryptoJS = require('crypto-js');
-const { secretKey } = require('../auth/secret');
+import { DropType } from './../types/dropsTypes';
+import { UserType } from './../types/usersTypes';
+import { Router } from "express";
+import CryptoJS from "crypto-js";
+import { secretKey } from "../auth/secret";
 
-const items = new Router();
+const items = Router();
 
 items.post('/sell/', async(req, res) => {
     const { users, cases, drops } = req.app.locals;
@@ -13,14 +15,14 @@ items.post('/sell/', async(req, res) => {
         return;
     }
     const { username, password } = JSON.parse(CryptoJS.AES.decrypt(userToken, secretKey).toString(CryptoJS.enc.Utf8));
-    const reqUser = await users.findOne({ username, password });
+    const reqUser: UserType = await users.findOne({ username, password });
     if (!reqUser) {
         res.status(200).json({ success: false, error: 'You are not logged in.' });
         return;
     }
 
     const rowid = parseInt(req.body.rowid);
-    const reqDrop = await drops.findOne({ rowid });
+    const reqDrop: DropType = await drops.findOne({ rowid });
     if (!reqDrop) {
         res.status(200).json({ success: false, error: 'This drop does not exist.' });
         return;
@@ -41,4 +43,4 @@ items.post('/sell/', async(req, res) => {
     res.status(200).json({ success: true, price: reqDrop.price });
 });
 
-module.exports = items;
+export default items

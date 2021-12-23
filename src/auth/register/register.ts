@@ -1,8 +1,9 @@
-const { Router } = require('express');
-const CryptoJS = require('crypto-js');
-const { secretKey } = require('../secret');
+import { UserType } from './../../types/usersTypes';
+import { Router } from "express";
+import CryptoJS from "crypto-js";
+import { secretKey } from "../secret";
 
-const register = new Router();
+const register = Router();
 
 register.post('/', async(req, res) => {
     const { users } = req.app.locals;
@@ -14,7 +15,7 @@ register.post('/', async(req, res) => {
         return;
     }
 
-    const userExists = await users.findOne({ username });
+    const userExists: UserType = await users.findOne({ username });
     if (userExists) {
         res.status(200).json({ success: false }).end();
         return;
@@ -29,4 +30,4 @@ register.post('/', async(req, res) => {
 
 })
 
-module.exports = register;
+export default register

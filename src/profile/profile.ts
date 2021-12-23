@@ -1,11 +1,14 @@
-const { Router } = require('express');
-const username = require('./username/username');
-const CryptoJS = require('crypto-js');
-const { secretKey } = require('../auth/secret');
-const balance = require('./balance/balance');
+import { DropType } from './../types/dropsTypes';
+import { Collection } from 'mongodb';
+import { UserType } from './../types/usersTypes';
+import { Router } from "express"
+import username from "./username/username"
+import CryptoJS from "crypto-js"
+import { secretKey } from "../auth/secret"
+import balance from "./balance/balance"
 
 
-const profile = new Router();
+const profile = Router();
 
 profile.use('/username/', username);
 profile.use('/balance/', balance);
@@ -20,6 +23,7 @@ profile.get('/info/:username', async(req, res) => {
     const usernameParam = req.params.username;
 
     const userIn = await users.findOne({ username: usernameParam });
+
     if (!userIn) {
         res.status(200).json({ success: false }).end();
         return;
@@ -42,12 +46,12 @@ profile.get('/drops/:username/:page', async(req, res) => {
 
     const NUM = 20;//Number of drops on every page
     const usernameParam = req.params.username;
-    const page = req.params.page;
+    const page = parseInt(req.params.page);
 
     //urldata for sorting
-    const caseId = parseInt(req.query.caseId);
-    const rarity = parseInt(req.query.rarity);
-    const notSold = parseBoolean(req.query.notSold);
+    const caseId = parseInt(req.query.caseId as string);
+    const rarity = parseInt(req.query.rarity as string);
+    const notSold = parseBoolean(req.query.notSold as string);
 
 
     const dropsArray = await drops.find({
@@ -59,13 +63,13 @@ profile.get('/drops/:username/:page', async(req, res) => {
     res.json(paginatedDrops);
 })
 
-const isItMe = async(usernameParam, userToken, users) => {
+export const isItMe = async(usernameParam: string, userToken: string, users: Collection<UserType>): Promise<boolean> => {
     let result = false;
     if (userToken) {
         const { username, password } = JSON.parse(CryptoJS.AES.decrypt(userToken, secretKey).toString(CryptoJS.enc.Utf8));
         if (username && password) {
             const authUser = await users.findOne({ username, password });
-            if (authUser.username === usernameParam) {
+            if (authUser?.username === usernameParam) {
                 result = true;
             }
         }
@@ -73,7 +77,7 @@ const isItMe = async(usernameParam, userToken, users) => {
     return result;
 }
 
-const parseBoolean = str => {
+const parseBoolean = (str: string): boolean | undefined => {
     if(str === 'false') {
         return false;
     } else if(str === 'true') {
@@ -83,7 +87,7 @@ const parseBoolean = str => {
     }
 }
 
-const filterDropsArray = (array, caseId, rarity, notSold) => {
+const filterDropsArray = (array: DropType[], caseId: number, rarity: number, notSold: boolean | undefined): DropType[] => {
     const newArray = array.filter(item => {
         // debugger
         if((item.caseid === caseId || (isNaN(caseId) || caseId === undefined))) {
@@ -108,5 +112,4 @@ const filterDropsArray = (array, caseId, rarity, notSold) => {
     return newArray;
 }
 
-module.exports = profile;
-module.exports.isItMe = isItMe;
+export default profile

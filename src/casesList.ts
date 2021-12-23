@@ -1,20 +1,22 @@
-const { Router } = require('express');
-const { baseImgUrl } = require('./instances');
+import { CaseType } from './types/casesTypes';
+// import { Collection } from 'mongodb';
+import { Router } from 'express'
+import { baseImgUrl } from './instances'
 
-const casesList = new Router();
+const casesList = Router();
 
 casesList.get('/:id?', async(req, res) => {
     const { cases } = req.app.locals;
 
     if (!req.params.id) {
-        const casesArray = await cases.find({ show: true }).toArray();
+        const casesArray: CaseType[] = await cases.find({ show: true }).toArray();
         const casesToSend = casesArray.map(({ _id, id, name, avatar, price }) => ({ _id, id, name, avatar: mapAvatar(avatar), price }));
         res.status(200).json(casesToSend);
         return;
     }
 
     const caseid = parseInt(req.params.id);
-    const caseObj = await cases.findOne({ id: caseid });
+    const caseObj: CaseType = await cases.findOne({ id: caseid });
     if (!caseObj) {
         res.status(200).json({ error: 'Not Found.' }).end();
         return;
@@ -28,7 +30,7 @@ casesList.get('/:id?', async(req, res) => {
     });
 });
 
-function mapAvatar(avatar) {
+function mapAvatar(avatar: string): string {
     debugger
 
     if(avatar.substr(0,4) === 'http') {
@@ -39,4 +41,4 @@ function mapAvatar(avatar) {
 }
 
 
-module.exports = casesList;
+export default casesList
