@@ -3,12 +3,12 @@ const rootFolders = ['img'];
 
 const img = new Router();
 
-img.get('*', (req,res) => {
+img.get('*', (req, res) => {
     const serverDirectory = __dirname.replace(new RegExp("\\\\", 'g'), "/");
-    const filePath = `${serverDirectory}\\img\\${req.url}`;
+    const filePath = `${serverDirectory}/img/${req.url}`;
     const rootFolder = req.url.split('/')[1];
 
-    if(!rootFolder.includes(rootFolder)) {
+    if (!rootFolder.includes(rootFolder)) {
         res.end("Error 404: No such file or Directory.");
     }
 

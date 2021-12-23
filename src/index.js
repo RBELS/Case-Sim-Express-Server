@@ -11,16 +11,17 @@ const validators = require('./validators/validators');
 const public = require('./public/public');
 const items = require('./items/items');
 
+const PORT = 5001;
+const PROD = false;
+const DB_NAME = 'casesim';
 
 const app = express();
-const PORT = 5000;
-const PROD = false;
 
 app.use(cors({
     // origin: 'http://25.40.173.182:3000',
-    origin: 'http://192.168.1.34:3000',
+    // origin: 'http://192.168.1.34:3000',
     // origin: 'http://192.168.1.34:3001',
-    // origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 app.use(bodyParser.json());
@@ -39,9 +40,9 @@ mongoClient.connect(async(err, client) => {
     if (err) {
         return console.log(err.stack);
     }
-    app.locals.users = client.db('casesim').collection('users');
-    app.locals.cases = client.db('casesim').collection('cases');
-    app.locals.drops = client.db('casesim').collection('drops');
+    app.locals.users = client.db(DB_NAME).collection('users');
+    app.locals.cases = client.db(DB_NAME).collection('cases');
+    app.locals.drops = client.db(DB_NAME).collection('drops');
 
     app.listen(PORT, () => {
         console.log(`App started on http://localhost:${PORT}`);
