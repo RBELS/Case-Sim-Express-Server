@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "dev": "ts-node-dev ./src/index.ts",
-        "build": "tsc && node ./dist/index.js"
+        "build": "tsc && cp -R src/public/img/img dist/public/img/ && node ./dist/index.js",
+        "clean": "rm -rf dist"
     },
     "author": "artyombel2003@gmail.com",
     "license": "ISC",
