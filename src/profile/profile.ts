@@ -1,7 +1,7 @@
 import { DropType } from './../types/dropsTypes';
 import { Collection } from 'mongodb';
 import { UserType } from './../types/usersTypes';
-import { Router } from "express"
+import { Request, Router } from "express"
 import username from "./username/username"
 import CryptoJS from "crypto-js"
 import { secretKey } from "../auth/secret"
@@ -39,26 +39,37 @@ profile.get('/info/:username', async(req, res) => {
     }).end();
 })
 
+interface ProfileDropsQueryI {
+    caseId: string
+    rarity: string
+    notSold: string
+    lastRowid: string
+}
+
+interface ProfileDropsParamsI {
+    username: string
+}
+
 // URL EXAMPLE
 // http://192.168.1.34:5000/profile/drops/rebel/1?caseId=1&rarity=3&notSold=false
-profile.get('/drops/:username/:page', async(req, res) => {
+profile.get('/drops/:username', async(req: Request<ProfileDropsParamsI, {}, {}, ProfileDropsQueryI>, res) => {
     const { drops } = req.app.locals;
 
     const NUM = 20;//Number of drops on every page
     const usernameParam = req.params.username;
-    const page = parseInt(req.params.page);
 
     //urldata for sorting
-    const caseId = parseInt(req.query.caseId as string);
-    const rarity = parseInt(req.query.rarity as string);
-    const notSold = parseBoolean(req.query.notSold as string);
+    const caseId = parseInt(req.query.caseId);
+    const rarity = parseInt(req.query.rarity);
+    const notSold = parseBoolean(req.query.notSold);
+    const lastRowid: number = parseInt(req.query.lastRowid);
 
 
     const dropsArray = await drops.find({
         user: usernameParam
     }).sort({ rowid: -1 }).toArray();
 
-    const paginatedDrops = filterDropsArray(dropsArray, caseId, rarity, notSold).slice(NUM * (page - 1), NUM * page);
+    const paginatedDrops = filterDropsArray(dropsArray, caseId, rarity, notSold, lastRowid).splice(0, NUM);
 
     res.json(paginatedDrops);
 })
@@ -87,7 +98,7 @@ const parseBoolean = (str: string): boolean | undefined => {
     }
 }
 
-const filterDropsArray = (array: DropType[], caseId: number, rarity: number, notSold: boolean | undefined): DropType[] => {
+const filterDropsArray = (array: DropType[], caseId: number, rarity: number, notSold: boolean | undefined, lastRowid: number): DropType[] => {
     const newArray = array.filter(item => {
         // debugger
         if((item.caseid === caseId || (isNaN(caseId) || caseId === undefined))) {
@@ -98,6 +109,9 @@ const filterDropsArray = (array: DropType[], caseId: number, rarity: number, not
         if(item.quality === rarity || (isNaN(rarity) || rarity === undefined)) {
 
         } else {
+            return false;
+        }
+        if(lastRowid !== -1 && item.rowid >= lastRowid) {
             return false;
         }
 

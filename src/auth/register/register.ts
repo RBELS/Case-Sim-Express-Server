@@ -2,6 +2,7 @@ import { UserType } from './../../types/usersTypes';
 import { Router } from "express";
 import CryptoJS from "crypto-js";
 import { secretKey } from "../secret";
+import { ObjectId } from 'mongodb';
 
 const register = Router();
 
@@ -21,7 +22,8 @@ register.post('/', async(req, res) => {
         return;
     }
     const passwordToken = CryptoJS.AES.encrypt(password, secretKey).toString();
-    const { ops: [newUser] } = await users.insertOne({ username, password: passwordToken, balance: 300 });
+    const { acknowledged, insertedId } = await users.insertOne({ username, password: passwordToken, balance: 300 });
+    const newUser = await users.findOne({ _id: new ObjectId(insertedId.toString()) })
 
     const userToken = CryptoJS.AES.encrypt(JSON.stringify({ username: newUser.username, password: newUser.password }), secretKey).toString();
     res.cookie('userToken', userToken, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
